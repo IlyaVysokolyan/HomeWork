@@ -1,26 +1,23 @@
 package ArraysAndCollections5;
-
-import java.net.InetAddress;
 import java.util.*;
 
 public class Lesson1 {
     public static ArrayList<String> arrayListNum = new ArrayList<>();
     public static HashSet<String> hashSetNum = new HashSet<>();
     public static TreeSet<String> treeSetNum = new TreeSet<>();
-    public static Random random = new Random();
     public static char[] alphabetAutoNum  = {'А','В','Е','К','М','Н','О','Р','С','Т','У','Х'};
 
     public static void main(String[] args) {
-        for(int i=0;i<3000;i++){
-            String numberCar =String.format("%s%d%s%s%s",oneSym(),generationSeries(),oneSym(),oneSym(),generationRegion());
-            arrayListNum.add(numberCar);
-            hashSetNum.add(numberCar);
-            treeSetNum.add(numberCar);
+        generationNumber();
+
+        for(String c:hashSetNum){
+            System.out.println(c);
         }
+
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите номер: ");
         String str = scanner.nextLine();
-        Collections.sort(arrayListNum);
         long start1Time = System.nanoTime();
         if(arrayListNum.contains(str)){
             System.out.println("Поиск перебором: номер найден, поиск занял: " + (System.nanoTime() - start1Time) + "нс");
@@ -49,20 +46,21 @@ public class Lesson1 {
 
 
        }
-       //Генератор букв
-       public static char oneSym(){
-        return alphabetAutoNum[random.nextInt(alphabetAutoNum.length)];
-       }
-       //Генерация серии
-       public static int generationSeries(){
-        return (int)((Math.random() * ((999 - 100) + 1)) + 100);
-       }
-       //Генерация региона
-        public static String generationRegion(){
-        int a = (int) ((Math.random()*((199-1)+1))+1);
-        if(a<10)
-           return "0"+a;
-        else return Integer.toString(a);
+       public static void generationNumber(){
+           for(int i = 111; i <= 999; i += 111) {
+               for (Character sym1 : alphabetAutoNum) {
+                   for (Character sym2 : alphabetAutoNum) {
+                       for (Character sym3 : alphabetAutoNum) {
+                           for (int region = 1; region <= 199; region++) {
+                               String num = String.format("%s%03d%s%s%d", sym1, i, sym2, sym3, region);
+                               arrayListNum.add(num);
+                               hashSetNum.add(num);
+                               treeSetNum.add(num);
+                           }
+                       }
+                   }
+               }
+           }
        }
     }
 
